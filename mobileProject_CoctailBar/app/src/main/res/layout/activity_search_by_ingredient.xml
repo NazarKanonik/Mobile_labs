@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="drinkListViewModel"
+            type="com.kanonik.cb.ui.drinks.DrinkListViewModel">
+        </variable>
+
+        <variable
+            name="ingredientsListViewModel"
+            type="com.kanonik.cb.ui.ingredients.IngredientsListViewModel">
+        </variable>
+    </data>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/search_by_ingredient_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:navigationIcon="?attr/homeAsUpIndicator"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:visibility="invisible"
+                app:mutableVisibility="@{drinkListViewModel.loadingVisibility}" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/drink_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:adapter="@{drinkListViewModel.drinkListAdapter}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/ingredients_list_search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:adapter="@{ingredientsListViewModel.ingredientsListAdapter}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+        </android.support.constraint.ConstraintLayout>
+    </LinearLayout>
+    </layout>
