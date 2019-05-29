@@ -14,13 +14,16 @@ import javax.inject.Inject
 
 class CategoryRepository(val context: Context) : BaseRepositoryModel() {
 
+    @Inject
+    lateinit var api: Api
+
     private val categoryDao = AppDatabase.getDatabase(context).categoryDao
 
     fun getCategories(loadCategoriesCallBack: CallBack.LoadCategoriesCallBack) {
         if (categoryDao.allCategories != null && categoryDao.allCategories!!.isNotEmpty()) {
             loadCategoriesCallBack.onLoad(categoryDao.allCategories!!)
         } else {
-            Companion.api.getCategoriesList()
+            api.getCategoriesList()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
@@ -48,10 +51,5 @@ class CategoryRepository(val context: Context) : BaseRepositoryModel() {
             dao.insertAll(params[0])
             return null
         }
-    }
-
-    companion object {
-        @Inject
-        lateinit var api: Api
     }
 }
